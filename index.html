@@ -1,68 +1,1441 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#000000">
-    <meta name="description" content="Web site created using CloudBase Webify">
-    <title>Hello Webify！</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-                sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        code {
-            font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-                monospace;
-        }
-        .App {
-            text-align: center;
-        }
-
-        .App-logo {
-            height: 40vmin;
-            pointer-events: none;
-        }
-
-        @media (prefers-reduced-motion: no-preference) {
-            .App-logo {
-                animation: App-logo-spin infinite 20s linear;
-            }
-        }
-
-        .App-header {
-            background-color: #efefef;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: calc(10px + 2vmin);
-            color: black;
-        }
-
-        .App-link {
-            color: #108ee9;
-        }
-    </style>
+  <meta charset="utf-8">
+  <title> Iris Species Clustering Visualization </title>
+  <link href="style.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script>
 </head>
-
 <body>
-    <div id="root">
-        <div class="App">
-            <header class="App-header">
-                <img src="https://main.qcloudimg.com/raw/2f3b21706c37e8685efe5c60b26ceb24.png" class="App-logo" alt="logo">
-                <p>Welcome to Webify！</p>
-                <a class="App-link" href="https://webify.cloudbase.net/"
-                    target="_blank" rel="noopener noreferrer">webify.cloudbase.net</a>
-            </header>
-        </div>
-    </div>
-</body>
 
+<div class="header">
+  <h1> Iris Species Clustering Visualization</h1>
+</div>
+<div class = "content"><p>Iris is a genus of 260–300 species of flowering plants with showy flowers. It takes its name from the Greek word for a rainbow, which is also the name for the Greek goddess of the rainbow, Iris. As well as being the scientific name, iris is also widely used as a common name for all Iris species, as well as some belonging to other closely related genera. It is a popular garden flower. Based on the fact that plant expert often decides the species of Iris based on the size of their petal and sepal, it uses width and length of petal and sepal to do the visualization and have a better insight of Iris species and its petal and sepal.<b>Three species: setosa, versicolor, and virginica, are used in this information visualization page. You may click the images below to see more introductions.</b></p>
+</div>
+<div class = "content">
+<a href="https://en.wikipedia.org/wiki/Iris_setosa">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Kosaciec_szczecinkowaty_Iris_setosa.jpg/330px-Kosaciec_szczecinkowaty_Iris_setosa.jpg" width = "240" height="240" />
+</a>
+<a href="https://en.wikipedia.org/wiki/Iris_versicolor">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Blue_Flag%2C_Ottawa.jpg/800px-Blue_Flag%2C_Ottawa.jpg" width = "240" height="240" />
+</a>
+<a href="https://en.wikipedia.org/wiki/Iris_virginica">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Iris_virginica_2.jpg/800px-Iris_virginica_2.jpg" width = "240" height="240" />
+</a>
+<br />
+<br /><br />
+<a href = "https://archive.ics.uci.edu/ml/datasets/iris" target="_blank" class = "button">view source dataset</a>
+<br />
+<br />
+<br />
+<HR style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="80%" color=black SIZE=0.5 />
+<h3 align = center>Scattplot: Sepal Size</h3>
+<HR style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="80%" color=black SIZE=0.5 />
+<br />
+  <canvas id="chart1" width="600" height="300"></canvas>
+<br />
+<br />
+<br />
+<HR style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="80%" color=black SIZE=0.5 />
+<h3 align = center>Bar Chart: Average Size of Petal and Sepal</h3>
+<HR style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="80%" color=black SIZE=0.5 />
+<br />
+  <canvas id="chart2" width="600" height="300"></canvas>
+<br />
+<br />
+<br />
+</div>
+<br />
+<HR style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="80%" color=black SIZE=0.5 />
+<h3 align = center>Boxplot: Petal Size</h3>
+<HR style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="80%" color=black SIZE=0.5 />
+<br />
+<br />
+<br />
+
+<div class='tableauPlaceholder' id='viz1634002218406' style='position: relative'><noscript><a href='#'><img alt='Iris Species Clustering by Shape ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ir&#47;Iris_16340020172280&#47;IrisSpeciesClusteringbyShape&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Iris_16340020172280&#47;IrisSpeciesClusteringbyShape' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ir&#47;Iris_16340020172280&#47;IrisSpeciesClusteringbyShape&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='zh-CN' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1634002218406');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+<script type='text/javascript' src='https://prod-apsoutheast-a.online.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 1536px; height: 666px;'><object class='tableauViz' width='1536' height='666' style='display:none;'><param name='host_url' value='https%3A%2F%2Fprod-apsoutheast-a.online.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='&#47;t&#47;ivunimelb' /><param name='name' value='Iris-1&#47;IrisSpeciesClusteringbyShape' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='showAppBanner' value='false' /></object></div>
+
+
+<script>
+// dataset
+let table1 = [{
+    "Id": 1,
+    "SepalLengthCm": 5.1,
+    "SepalWidthCm": 3.5,
+    "PetalLengthCm": 1.4,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 2,
+    "SepalLengthCm": 4.9,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 1.4,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 3,
+    "SepalLengthCm": 4.7,
+    "SepalWidthCm": 3.2,
+    "PetalLengthCm": 1.3,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 4,
+    "SepalLengthCm": 4.6,
+    "SepalWidthCm": 3.1,
+    "PetalLengthCm": 1.5,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 5,
+    "SepalLengthCm": 5,
+    "SepalWidthCm": 3.6,
+    "PetalLengthCm": 1.4,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 6,
+    "SepalLengthCm": 5.4,
+    "SepalWidthCm": 3.9,
+    "PetalLengthCm": 1.7,
+    "PetalWidthCm": 0.4,
+    "Species": "setosa"
+  },
+  {
+    "Id": 7,
+    "SepalLengthCm": 4.6,
+    "SepalWidthCm": 3.4,
+    "PetalLengthCm": 1.4,
+    "PetalWidthCm": 0.3,
+    "Species": "setosa"
+  },
+  {
+    "Id": 8,
+    "SepalLengthCm": 5,
+    "SepalWidthCm": 3.4,
+    "PetalLengthCm": 1.5,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 9,
+    "SepalLengthCm": 4.4,
+    "SepalWidthCm": 2.9,
+    "PetalLengthCm": 1.4,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 10,
+    "SepalLengthCm": 4.9,
+    "SepalWidthCm": 3.1,
+    "PetalLengthCm": 1.5,
+    "PetalWidthCm": 0.1,
+    "Species": "setosa"
+  },
+  {
+    "Id": 11,
+    "SepalLengthCm": 5.4,
+    "SepalWidthCm": 3.7,
+    "PetalLengthCm": 1.5,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 12,
+    "SepalLengthCm": 4.8,
+    "SepalWidthCm": 3.4,
+    "PetalLengthCm": 1.6,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 13,
+    "SepalLengthCm": 4.8,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 1.4,
+    "PetalWidthCm": 0.1,
+    "Species": "setosa"
+  },
+  {
+    "Id": 14,
+    "SepalLengthCm": 4.3,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 1.1,
+    "PetalWidthCm": 0.1,
+    "Species": "setosa"
+  },
+  {
+    "Id": 15,
+    "SepalLengthCm": 5.8,
+    "SepalWidthCm": 4,
+    "PetalLengthCm": 1.2,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 16,
+    "SepalLengthCm": 5.7,
+    "SepalWidthCm": 4.4,
+    "PetalLengthCm": 1.5,
+    "PetalWidthCm": 0.4,
+    "Species": "setosa"
+  },
+  {
+    "Id": 17,
+    "SepalLengthCm": 5.4,
+    "SepalWidthCm": 3.9,
+    "PetalLengthCm": 1.3,
+    "PetalWidthCm": 0.4,
+    "Species": "setosa"
+  },
+  {
+    "Id": 18,
+    "SepalLengthCm": 5.1,
+    "SepalWidthCm": 3.5,
+    "PetalLengthCm": 1.4,
+    "PetalWidthCm": 0.3,
+    "Species": "setosa"
+  },
+  {
+    "Id": 19,
+    "SepalLengthCm": 5.7,
+    "SepalWidthCm": 3.8,
+    "PetalLengthCm": 1.7,
+    "PetalWidthCm": 0.3,
+    "Species": "setosa"
+  },
+  {
+    "Id": 20,
+    "SepalLengthCm": 5.1,
+    "SepalWidthCm": 3.8,
+    "PetalLengthCm": 1.5,
+    "PetalWidthCm": 0.3,
+    "Species": "setosa"
+  },
+  {
+    "Id": 21,
+    "SepalLengthCm": 5.4,
+    "SepalWidthCm": 3.4,
+    "PetalLengthCm": 1.7,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 22,
+    "SepalLengthCm": 5.1,
+    "SepalWidthCm": 3.7,
+    "PetalLengthCm": 1.5,
+    "PetalWidthCm": 0.4,
+    "Species": "setosa"
+  },
+  {
+    "Id": 23,
+    "SepalLengthCm": 4.6,
+    "SepalWidthCm": 3.6,
+    "PetalLengthCm": 1,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 24,
+    "SepalLengthCm": 5.1,
+    "SepalWidthCm": 3.3,
+    "PetalLengthCm": 1.7,
+    "PetalWidthCm": 0.5,
+    "Species": "setosa"
+  },
+  {
+    "Id": 25,
+    "SepalLengthCm": 4.8,
+    "SepalWidthCm": 3.4,
+    "PetalLengthCm": 1.9,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 26,
+    "SepalLengthCm": 5,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 1.6,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 27,
+    "SepalLengthCm": 5,
+    "SepalWidthCm": 3.4,
+    "PetalLengthCm": 1.6,
+    "PetalWidthCm": 0.4,
+    "Species": "setosa"
+  },
+  {
+    "Id": 28,
+    "SepalLengthCm": 5.2,
+    "SepalWidthCm": 3.5,
+    "PetalLengthCm": 1.5,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 29,
+    "SepalLengthCm": 5.2,
+    "SepalWidthCm": 3.4,
+    "PetalLengthCm": 1.4,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 30,
+    "SepalLengthCm": 4.7,
+    "SepalWidthCm": 3.2,
+    "PetalLengthCm": 1.6,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 31,
+    "SepalLengthCm": 4.8,
+    "SepalWidthCm": 3.1,
+    "PetalLengthCm": 1.6,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 32,
+    "SepalLengthCm": 5.4,
+    "SepalWidthCm": 3.4,
+    "PetalLengthCm": 1.5,
+    "PetalWidthCm": 0.4,
+    "Species": "setosa"
+  },
+  {
+    "Id": 33,
+    "SepalLengthCm": 5.2,
+    "SepalWidthCm": 4.1,
+    "PetalLengthCm": 1.5,
+    "PetalWidthCm": 0.1,
+    "Species": "setosa"
+  },
+  {
+    "Id": 34,
+    "SepalLengthCm": 5.5,
+    "SepalWidthCm": 4.2,
+    "PetalLengthCm": 1.4,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 35,
+    "SepalLengthCm": 4.9,
+    "SepalWidthCm": 3.1,
+    "PetalLengthCm": 1.5,
+    "PetalWidthCm": 0.1,
+    "Species": "setosa"
+  },
+  {
+    "Id": 36,
+    "SepalLengthCm": 5,
+    "SepalWidthCm": 3.2,
+    "PetalLengthCm": 1.2,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 37,
+    "SepalLengthCm": 5.5,
+    "SepalWidthCm": 3.5,
+    "PetalLengthCm": 1.3,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 38,
+    "SepalLengthCm": 4.9,
+    "SepalWidthCm": 3.1,
+    "PetalLengthCm": 1.5,
+    "PetalWidthCm": 0.1,
+    "Species": "setosa"
+  },
+  {
+    "Id": 39,
+    "SepalLengthCm": 4.4,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 1.3,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 40,
+    "SepalLengthCm": 5.1,
+    "SepalWidthCm": 3.4,
+    "PetalLengthCm": 1.5,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 41,
+    "SepalLengthCm": 5,
+    "SepalWidthCm": 3.5,
+    "PetalLengthCm": 1.3,
+    "PetalWidthCm": 0.3,
+    "Species": "setosa"
+  },
+  {
+    "Id": 42,
+    "SepalLengthCm": 4.5,
+    "SepalWidthCm": 2.3,
+    "PetalLengthCm": 1.3,
+    "PetalWidthCm": 0.3,
+    "Species": "setosa"
+  },
+  {
+    "Id": 43,
+    "SepalLengthCm": 4.4,
+    "SepalWidthCm": 3.2,
+    "PetalLengthCm": 1.3,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 44,
+    "SepalLengthCm": 5,
+    "SepalWidthCm": 3.5,
+    "PetalLengthCm": 1.6,
+    "PetalWidthCm": 0.6,
+    "Species": "setosa"
+  },
+  {
+    "Id": 45,
+    "SepalLengthCm": 5.1,
+    "SepalWidthCm": 3.8,
+    "PetalLengthCm": 1.9,
+    "PetalWidthCm": 0.4,
+    "Species": "setosa"
+  },
+  {
+    "Id": 46,
+    "SepalLengthCm": 4.8,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 1.4,
+    "PetalWidthCm": 0.3,
+    "Species": "setosa"
+  },
+  {
+    "Id": 47,
+    "SepalLengthCm": 5.1,
+    "SepalWidthCm": 3.8,
+    "PetalLengthCm": 1.6,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 48,
+    "SepalLengthCm": 4.6,
+    "SepalWidthCm": 3.2,
+    "PetalLengthCm": 1.4,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 49,
+    "SepalLengthCm": 5.3,
+    "SepalWidthCm": 3.7,
+    "PetalLengthCm": 1.5,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  },
+  {
+    "Id": 50,
+    "SepalLengthCm": 5,
+    "SepalWidthCm": 3.3,
+    "PetalLengthCm": 1.4,
+    "PetalWidthCm": 0.2,
+    "Species": "setosa"
+  }
+]
+
+let table2 = [{
+    "Id": 51,
+    "SepalLengthCm": 7,
+    "SepalWidthCm": 3.2,
+    "PetalLengthCm": 4.7,
+    "PetalWidthCm": 1.4,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 52,
+    "SepalLengthCm": 6.4,
+    "SepalWidthCm": 3.2,
+    "PetalLengthCm": 4.5,
+    "PetalWidthCm": 1.5,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 53,
+    "SepalLengthCm": 6.9,
+    "SepalWidthCm": 3.1,
+    "PetalLengthCm": 4.9,
+    "PetalWidthCm": 1.5,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 54,
+    "SepalLengthCm": 5.5,
+    "SepalWidthCm": 2.3,
+    "PetalLengthCm": 4,
+    "PetalWidthCm": 1.3,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 55,
+    "SepalLengthCm": 6.5,
+    "SepalWidthCm": 2.8,
+    "PetalLengthCm": 4.6,
+    "PetalWidthCm": 1.5,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 56,
+    "SepalLengthCm": 5.7,
+    "SepalWidthCm": 2.8,
+    "PetalLengthCm": 4.5,
+    "PetalWidthCm": 1.3,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 57,
+    "SepalLengthCm": 6.3,
+    "SepalWidthCm": 3.3,
+    "PetalLengthCm": 4.7,
+    "PetalWidthCm": 1.6,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 58,
+    "SepalLengthCm": 4.9,
+    "SepalWidthCm": 2.4,
+    "PetalLengthCm": 3.3,
+    "PetalWidthCm": 1,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 59,
+    "SepalLengthCm": 6.6,
+    "SepalWidthCm": 2.9,
+    "PetalLengthCm": 4.6,
+    "PetalWidthCm": 1.3,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 60,
+    "SepalLengthCm": 5.2,
+    "SepalWidthCm": 2.7,
+    "PetalLengthCm": 3.9,
+    "PetalWidthCm": 1.4,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 61,
+    "SepalLengthCm": 5,
+    "SepalWidthCm": 2,
+    "PetalLengthCm": 3.5,
+    "PetalWidthCm": 1,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 62,
+    "SepalLengthCm": 5.9,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 4.2,
+    "PetalWidthCm": 1.5,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 63,
+    "SepalLengthCm": 6,
+    "SepalWidthCm": 2.2,
+    "PetalLengthCm": 4,
+    "PetalWidthCm": 1,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 64,
+    "SepalLengthCm": 6.1,
+    "SepalWidthCm": 2.9,
+    "PetalLengthCm": 4.7,
+    "PetalWidthCm": 1.4,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 65,
+    "SepalLengthCm": 5.6,
+    "SepalWidthCm": 2.9,
+    "PetalLengthCm": 3.6,
+    "PetalWidthCm": 1.3,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 66,
+    "SepalLengthCm": 6.7,
+    "SepalWidthCm": 3.1,
+    "PetalLengthCm": 4.4,
+    "PetalWidthCm": 1.4,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 67,
+    "SepalLengthCm": 5.6,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 4.5,
+    "PetalWidthCm": 1.5,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 68,
+    "SepalLengthCm": 5.8,
+    "SepalWidthCm": 2.7,
+    "PetalLengthCm": 4.1,
+    "PetalWidthCm": 1,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 69,
+    "SepalLengthCm": 6.2,
+    "SepalWidthCm": 2.2,
+    "PetalLengthCm": 4.5,
+    "PetalWidthCm": 1.5,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 70,
+    "SepalLengthCm": 5.6,
+    "SepalWidthCm": 2.5,
+    "PetalLengthCm": 3.9,
+    "PetalWidthCm": 1.1,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 71,
+    "SepalLengthCm": 5.9,
+    "SepalWidthCm": 3.2,
+    "PetalLengthCm": 4.8,
+    "PetalWidthCm": 1.8,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 72,
+    "SepalLengthCm": 6.1,
+    "SepalWidthCm": 2.8,
+    "PetalLengthCm": 4,
+    "PetalWidthCm": 1.3,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 73,
+    "SepalLengthCm": 6.3,
+    "SepalWidthCm": 2.5,
+    "PetalLengthCm": 4.9,
+    "PetalWidthCm": 1.5,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 74,
+    "SepalLengthCm": 6.1,
+    "SepalWidthCm": 2.8,
+    "PetalLengthCm": 4.7,
+    "PetalWidthCm": 1.2,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 75,
+    "SepalLengthCm": 6.4,
+    "SepalWidthCm": 2.9,
+    "PetalLengthCm": 4.3,
+    "PetalWidthCm": 1.3,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 76,
+    "SepalLengthCm": 6.6,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 4.4,
+    "PetalWidthCm": 1.4,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 77,
+    "SepalLengthCm": 6.8,
+    "SepalWidthCm": 2.8,
+    "PetalLengthCm": 4.8,
+    "PetalWidthCm": 1.4,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 78,
+    "SepalLengthCm": 6.7,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 5,
+    "PetalWidthCm": 1.7,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 79,
+    "SepalLengthCm": 6,
+    "SepalWidthCm": 2.9,
+    "PetalLengthCm": 4.5,
+    "PetalWidthCm": 1.5,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 80,
+    "SepalLengthCm": 5.7,
+    "SepalWidthCm": 2.6,
+    "PetalLengthCm": 3.5,
+    "PetalWidthCm": 1,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 81,
+    "SepalLengthCm": 5.5,
+    "SepalWidthCm": 2.4,
+    "PetalLengthCm": 3.8,
+    "PetalWidthCm": 1.1,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 82,
+    "SepalLengthCm": 5.5,
+    "SepalWidthCm": 2.4,
+    "PetalLengthCm": 3.7,
+    "PetalWidthCm": 1,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 83,
+    "SepalLengthCm": 5.8,
+    "SepalWidthCm": 2.7,
+    "PetalLengthCm": 3.9,
+    "PetalWidthCm": 1.2,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 84,
+    "SepalLengthCm": 6,
+    "SepalWidthCm": 2.7,
+    "PetalLengthCm": 5.1,
+    "PetalWidthCm": 1.6,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 85,
+    "SepalLengthCm": 5.4,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 4.5,
+    "PetalWidthCm": 1.5,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 86,
+    "SepalLengthCm": 6,
+    "SepalWidthCm": 3.4,
+    "PetalLengthCm": 4.5,
+    "PetalWidthCm": 1.6,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 87,
+    "SepalLengthCm": 6.7,
+    "SepalWidthCm": 3.1,
+    "PetalLengthCm": 4.7,
+    "PetalWidthCm": 1.5,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 88,
+    "SepalLengthCm": 6.3,
+    "SepalWidthCm": 2.3,
+    "PetalLengthCm": 4.4,
+    "PetalWidthCm": 1.3,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 89,
+    "SepalLengthCm": 5.6,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 4.1,
+    "PetalWidthCm": 1.3,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 90,
+    "SepalLengthCm": 5.5,
+    "SepalWidthCm": 2.5,
+    "PetalLengthCm": 4,
+    "PetalWidthCm": 1.3,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 91,
+    "SepalLengthCm": 5.5,
+    "SepalWidthCm": 2.6,
+    "PetalLengthCm": 4.4,
+    "PetalWidthCm": 1.2,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 92,
+    "SepalLengthCm": 6.1,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 4.6,
+    "PetalWidthCm": 1.4,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 93,
+    "SepalLengthCm": 5.8,
+    "SepalWidthCm": 2.6,
+    "PetalLengthCm": 4,
+    "PetalWidthCm": 1.2,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 94,
+    "SepalLengthCm": 5,
+    "SepalWidthCm": 2.3,
+    "PetalLengthCm": 3.3,
+    "PetalWidthCm": 1,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 95,
+    "SepalLengthCm": 5.6,
+    "SepalWidthCm": 2.7,
+    "PetalLengthCm": 4.2,
+    "PetalWidthCm": 1.3,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 96,
+    "SepalLengthCm": 5.7,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 4.2,
+    "PetalWidthCm": 1.2,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 97,
+    "SepalLengthCm": 5.7,
+    "SepalWidthCm": 2.9,
+    "PetalLengthCm": 4.2,
+    "PetalWidthCm": 1.3,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 98,
+    "SepalLengthCm": 6.2,
+    "SepalWidthCm": 2.9,
+    "PetalLengthCm": 4.3,
+    "PetalWidthCm": 1.3,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 99,
+    "SepalLengthCm": 5.1,
+    "SepalWidthCm": 2.5,
+    "PetalLengthCm": 3,
+    "PetalWidthCm": 1.1,
+    "Species": "versicolor"
+  },
+  {
+    "Id": 100,
+    "SepalLengthCm": 5.7,
+    "SepalWidthCm": 2.8,
+    "PetalLengthCm": 4.1,
+    "PetalWidthCm": 1.3,
+    "Species": "versicolor"
+  }
+]
+
+let table3 = [{
+    "Id": 101,
+    "SepalLengthCm": 6.3,
+    "SepalWidthCm": 3.3,
+    "PetalLengthCm": 6,
+    "PetalWidthCm": 2.5,
+    "Species": "virginica"
+  },
+  {
+    "Id": 102,
+    "SepalLengthCm": 5.8,
+    "SepalWidthCm": 2.7,
+    "PetalLengthCm": 5.1,
+    "PetalWidthCm": 1.9,
+    "Species": "virginica"
+  },
+  {
+    "Id": 103,
+    "SepalLengthCm": 7.1,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 5.9,
+    "PetalWidthCm": 2.1,
+    "Species": "virginica"
+  },
+  {
+    "Id": 104,
+    "SepalLengthCm": 6.3,
+    "SepalWidthCm": 2.9,
+    "PetalLengthCm": 5.6,
+    "PetalWidthCm": 1.8,
+    "Species": "virginica"
+  },
+  {
+    "Id": 105,
+    "SepalLengthCm": 6.5,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 5.8,
+    "PetalWidthCm": 2.2,
+    "Species": "virginica"
+  },
+  {
+    "Id": 106,
+    "SepalLengthCm": 7.6,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 6.6,
+    "PetalWidthCm": 2.1,
+    "Species": "virginica"
+  },
+  {
+    "Id": 107,
+    "SepalLengthCm": 4.9,
+    "SepalWidthCm": 2.5,
+    "PetalLengthCm": 4.5,
+    "PetalWidthCm": 1.7,
+    "Species": "virginica"
+  },
+  {
+    "Id": 108,
+    "SepalLengthCm": 7.3,
+    "SepalWidthCm": 2.9,
+    "PetalLengthCm": 6.3,
+    "PetalWidthCm": 1.8,
+    "Species": "virginica"
+  },
+  {
+    "Id": 109,
+    "SepalLengthCm": 6.7,
+    "SepalWidthCm": 2.5,
+    "PetalLengthCm": 5.8,
+    "PetalWidthCm": 1.8,
+    "Species": "virginica"
+  },
+  {
+    "Id": 110,
+    "SepalLengthCm": 7.2,
+    "SepalWidthCm": 3.6,
+    "PetalLengthCm": 6.1,
+    "PetalWidthCm": 2.5,
+    "Species": "virginica"
+  },
+  {
+    "Id": 111,
+    "SepalLengthCm": 6.5,
+    "SepalWidthCm": 3.2,
+    "PetalLengthCm": 5.1,
+    "PetalWidthCm": 2,
+    "Species": "virginica"
+  },
+  {
+    "Id": 112,
+    "SepalLengthCm": 6.4,
+    "SepalWidthCm": 2.7,
+    "PetalLengthCm": 5.3,
+    "PetalWidthCm": 1.9,
+    "Species": "virginica"
+  },
+  {
+    "Id": 113,
+    "SepalLengthCm": 6.8,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 5.5,
+    "PetalWidthCm": 2.1,
+    "Species": "virginica"
+  },
+  {
+    "Id": 114,
+    "SepalLengthCm": 5.7,
+    "SepalWidthCm": 2.5,
+    "PetalLengthCm": 5,
+    "PetalWidthCm": 2,
+    "Species": "virginica"
+  },
+  {
+    "Id": 115,
+    "SepalLengthCm": 5.8,
+    "SepalWidthCm": 2.8,
+    "PetalLengthCm": 5.1,
+    "PetalWidthCm": 2.4,
+    "Species": "virginica"
+  },
+  {
+    "Id": 116,
+    "SepalLengthCm": 6.4,
+    "SepalWidthCm": 3.2,
+    "PetalLengthCm": 5.3,
+    "PetalWidthCm": 2.3,
+    "Species": "virginica"
+  },
+  {
+    "Id": 117,
+    "SepalLengthCm": 6.5,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 5.5,
+    "PetalWidthCm": 1.8,
+    "Species": "virginica"
+  },
+  {
+    "Id": 118,
+    "SepalLengthCm": 7.7,
+    "SepalWidthCm": 3.8,
+    "PetalLengthCm": 6.7,
+    "PetalWidthCm": 2.2,
+    "Species": "virginica"
+  },
+  {
+    "Id": 119,
+    "SepalLengthCm": 7.7,
+    "SepalWidthCm": 2.6,
+    "PetalLengthCm": 6.9,
+    "PetalWidthCm": 2.3,
+    "Species": "virginica"
+  },
+  {
+    "Id": 120,
+    "SepalLengthCm": 6,
+    "SepalWidthCm": 2.2,
+    "PetalLengthCm": 5,
+    "PetalWidthCm": 1.5,
+    "Species": "virginica"
+  },
+  {
+    "Id": 121,
+    "SepalLengthCm": 6.9,
+    "SepalWidthCm": 3.2,
+    "PetalLengthCm": 5.7,
+    "PetalWidthCm": 2.3,
+    "Species": "virginica"
+  },
+  {
+    "Id": 122,
+    "SepalLengthCm": 5.6,
+    "SepalWidthCm": 2.8,
+    "PetalLengthCm": 4.9,
+    "PetalWidthCm": 2,
+    "Species": "virginica"
+  },
+  {
+    "Id": 123,
+    "SepalLengthCm": 7.7,
+    "SepalWidthCm": 2.8,
+    "PetalLengthCm": 6.7,
+    "PetalWidthCm": 2,
+    "Species": "virginica"
+  },
+  {
+    "Id": 124,
+    "SepalLengthCm": 6.3,
+    "SepalWidthCm": 2.7,
+    "PetalLengthCm": 4.9,
+    "PetalWidthCm": 1.8,
+    "Species": "virginica"
+  },
+  {
+    "Id": 125,
+    "SepalLengthCm": 6.7,
+    "SepalWidthCm": 3.3,
+    "PetalLengthCm": 5.7,
+    "PetalWidthCm": 2.1,
+    "Species": "virginica"
+  },
+  {
+    "Id": 126,
+    "SepalLengthCm": 7.2,
+    "SepalWidthCm": 3.2,
+    "PetalLengthCm": 6,
+    "PetalWidthCm": 1.8,
+    "Species": "virginica"
+  },
+  {
+    "Id": 127,
+    "SepalLengthCm": 6.2,
+    "SepalWidthCm": 2.8,
+    "PetalLengthCm": 4.8,
+    "PetalWidthCm": 1.8,
+    "Species": "virginica"
+  },
+  {
+    "Id": 128,
+    "SepalLengthCm": 6.1,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 4.9,
+    "PetalWidthCm": 1.8,
+    "Species": "virginica"
+  },
+  {
+    "Id": 129,
+    "SepalLengthCm": 6.4,
+    "SepalWidthCm": 2.8,
+    "PetalLengthCm": 5.6,
+    "PetalWidthCm": 2.1,
+    "Species": "virginica"
+  },
+  {
+    "Id": 130,
+    "SepalLengthCm": 7.2,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 5.8,
+    "PetalWidthCm": 1.6,
+    "Species": "virginica"
+  },
+  {
+    "Id": 131,
+    "SepalLengthCm": 7.4,
+    "SepalWidthCm": 2.8,
+    "PetalLengthCm": 6.1,
+    "PetalWidthCm": 1.9,
+    "Species": "virginica"
+  },
+  {
+    "Id": 132,
+    "SepalLengthCm": 7.9,
+    "SepalWidthCm": 3.8,
+    "PetalLengthCm": 6.4,
+    "PetalWidthCm": 2,
+    "Species": "virginica"
+  },
+  {
+    "Id": 133,
+    "SepalLengthCm": 6.4,
+    "SepalWidthCm": 2.8,
+    "PetalLengthCm": 5.6,
+    "PetalWidthCm": 2.2,
+    "Species": "virginica"
+  },
+  {
+    "Id": 134,
+    "SepalLengthCm": 6.3,
+    "SepalWidthCm": 2.8,
+    "PetalLengthCm": 5.1,
+    "PetalWidthCm": 1.5,
+    "Species": "virginica"
+  },
+  {
+    "Id": 135,
+    "SepalLengthCm": 6.1,
+    "SepalWidthCm": 2.6,
+    "PetalLengthCm": 5.6,
+    "PetalWidthCm": 1.4,
+    "Species": "virginica"
+  },
+  {
+    "Id": 136,
+    "SepalLengthCm": 7.7,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 6.1,
+    "PetalWidthCm": 2.3,
+    "Species": "virginica"
+  },
+  {
+    "Id": 137,
+    "SepalLengthCm": 6.3,
+    "SepalWidthCm": 3.4,
+    "PetalLengthCm": 5.6,
+    "PetalWidthCm": 2.4,
+    "Species": "virginica"
+  },
+  {
+    "Id": 138,
+    "SepalLengthCm": 6.4,
+    "SepalWidthCm": 3.1,
+    "PetalLengthCm": 5.5,
+    "PetalWidthCm": 1.8,
+    "Species": "virginica"
+  },
+  {
+    "Id": 139,
+    "SepalLengthCm": 6,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 4.8,
+    "PetalWidthCm": 1.8,
+    "Species": "virginica"
+  },
+  {
+    "Id": 140,
+    "SepalLengthCm": 6.9,
+    "SepalWidthCm": 3.1,
+    "PetalLengthCm": 5.4,
+    "PetalWidthCm": 2.1,
+    "Species": "virginica"
+  },
+  {
+    "Id": 141,
+    "SepalLengthCm": 6.7,
+    "SepalWidthCm": 3.1,
+    "PetalLengthCm": 5.6,
+    "PetalWidthCm": 2.4,
+    "Species": "virginica"
+  },
+  {
+    "Id": 142,
+    "SepalLengthCm": 6.9,
+    "SepalWidthCm": 3.1,
+    "PetalLengthCm": 5.1,
+    "PetalWidthCm": 2.3,
+    "Species": "virginica"
+  },
+  {
+    "Id": 143,
+    "SepalLengthCm": 5.8,
+    "SepalWidthCm": 2.7,
+    "PetalLengthCm": 5.1,
+    "PetalWidthCm": 1.9,
+    "Species": "virginica"
+  },
+  {
+    "Id": 144,
+    "SepalLengthCm": 6.8,
+    "SepalWidthCm": 3.2,
+    "PetalLengthCm": 5.9,
+    "PetalWidthCm": 2.3,
+    "Species": "virginica"
+  },
+  {
+    "Id": 145,
+    "SepalLengthCm": 6.7,
+    "SepalWidthCm": 3.3,
+    "PetalLengthCm": 5.7,
+    "PetalWidthCm": 2.5,
+    "Species": "virginica"
+  },
+  {
+    "Id": 146,
+    "SepalLengthCm": 6.7,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 5.2,
+    "PetalWidthCm": 2.3,
+    "Species": "virginica"
+  },
+  {
+    "Id": 147,
+    "SepalLengthCm": 6.3,
+    "SepalWidthCm": 2.5,
+    "PetalLengthCm": 5,
+    "PetalWidthCm": 1.9,
+    "Species": "virginica"
+  },
+  {
+    "Id": 148,
+    "SepalLengthCm": 6.5,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 5.2,
+    "PetalWidthCm": 2,
+    "Species": "virginica"
+  },
+  {
+    "Id": 149,
+    "SepalLengthCm": 6.2,
+    "SepalWidthCm": 3.4,
+    "PetalLengthCm": 5.4,
+    "PetalWidthCm": 2.3,
+    "Species": "virginica"
+  },
+  {
+    "Id": 150,
+    "SepalLengthCm": 5.9,
+    "SepalWidthCm": 3,
+    "PetalLengthCm": 5.1,
+    "PetalWidthCm": 1.8,
+    "Species": "virginica"
+  }
+]
+
+let table4 = [{
+    "Species": "setosa",
+    "SepalLengthAvg": 5.04,
+    "SepalWidthAvg": 3.46,
+    "PetalLengthAvg": 1.47,
+    "PetalWidthAvg": 0.25
+  },
+  {
+    "Species": "versicolor",
+    "SepalLengthAvg": 5.3,
+    "SepalWidthAvg": 3.22,
+    "PetalLengthAvg": 2.32,
+    "PetalWidthAvg": 0.67
+  },
+  {
+    "Species": "virginica",
+    "SepalLengthAvg": 5.77,
+    "SepalWidthAvg": 3.06,
+    "PetalLengthAvg": 3.56,
+    "PetalWidthAvg": 1.09
+  }
+]
+
+// - chart.js -
+
+let chart1 = new Chart('chart1', {
+  type: 'scatter',
+  data: {
+    datasets: [{
+        data: table1,
+        label: "setosa",
+        backgroundColor: "#FF5733",
+        parsing: {
+          xAxisKey: 'SepalLengthCm',
+          yAxisKey: 'SepalWidthCm'
+        }
+      },
+      {
+        data: table2,
+        label: "versicolor",
+        backgroundColor: "#FFC300",
+        parsing: {
+          xAxisKey: 'SepalLengthCm',
+          yAxisKey: 'SepalWidthCm'
+        }
+      },
+      {
+        data: table3,
+        label: "virginica",
+        backgroundColor: "#5BBBFD",
+        parsing: {
+          xAxisKey: 'SepalLengthCm',
+          yAxisKey: 'SepalWidthCm'
+        }
+      }
+    ]
+  },
+  options: {
+    scales: {
+      x: {
+        grid: {},
+        ticks: {},
+        title: {display: true, text:"Sepal length (cm)"}
+      },
+      y: {
+        grid: {},
+        ticks: {},
+        title: {display:true, text:"Sepal width (cm)"}
+      }
+    },
+    animation: {},
+    plugins: {
+      legend: {},
+      title: {display:true,
+      text: "Distribution of three species in sepal width and length"},
+      tooltip: {xAlign: 'left',
+        yAlign: 'center',
+        displayColors: false,
+        titleAlign: 'center',
+        bodyAlign: 'center'}
+    }
+  }
+});
+
+
+let chart2 = new Chart('chart2', {
+  type: 'bar',
+  data: {
+    datasets: [{
+      data: table4,
+      parsing: {
+        xAxisKey: 'SepalWidthAvg',
+        yAxisKey: 'Species'
+      },
+      categoryPercentage: 0.8,
+      barPercentage: 0.85,
+      backgroundColor: '#DE3163',
+      label: 'Average sepal width'
+    }, {
+      data: table4,
+      parsing: {
+        xAxisKey: 'SepalLengthAvg',
+        yAxisKey: 'Species'
+      },
+      categoryPercentage: 0.8,
+      barPercentage: 0.85,
+      backgroundColor: '#FF7F50',
+      label: 'Average sepal length'
+    }, {
+      data: table4,
+      parsing: {
+        xAxisKey: 'PetalWidthAvg',
+        yAxisKey: 'Species'
+      },
+      categoryPercentage: 0.8,
+      barPercentage: 0.85,
+      backgroundColor: '#FFBF00',
+      label: 'Average petal width'
+    }, {
+      data: table4,
+      parsing: {
+        xAxisKey: 'PetalLengthAvg',
+        yAxisKey: 'Species'
+      },
+      categoryPercentage: 0.8,
+      barPercentage: 0.85,
+      backgroundColor: '#DFFF00',
+      label: 'Average petal length'
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    scales: {
+      x: {
+        grid: {},
+        ticks: {},
+        title: {
+          display: true,
+          text: 'Average Length (cm)'
+        }
+      },
+      y: {
+        grid: {
+          display: false
+        },
+        ticks: {},
+        title: {}
+      }
+    },
+    animation: false,
+    plugins: {
+      legend: {},
+      title: {
+        display: true,
+        text: 'Comparision of petal and sepal size in width and length'
+      },
+      tooltip: {
+        xAlign: 'left',
+        yAlign: 'center',
+        displayColors: false,
+        titleAlign: 'center',
+        bodyAlign: 'center'
+      }
+    }
+  }
+
+});
+
+</script>
+
+</body>
 </html>
