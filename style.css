@@ -1,0 +1,38 @@
+body {
+  background: white;
+}
+
+.header {
+  font-family: 'Roboto Slab', sans-serif;
+  color: white;
+  background: url("https://w0.peakpx.com/wallpaper/456/146/HD-wallpaper-irises-summer-flowerbed-flowers.jpg");
+  background-size: cover;
+  text-shadow: 0 0 10px black;
+  text-align: center;
+  padding: 2em 0;
+}
+
+.content {
+  max-width: 52em;
+  margin: auto;
+}
+
+
+.button {
+  background-color: #21618C;
+  color: white;
+  padding: 1em 1.5em;
+  text-decoration: none;
+  text-transform: uppercase;
+  
+  border: solid 1px #eee;
+  border-radius: 10px; /* round corners */
+  box-shadow: 0px 0.5px 0.5px 0.5px #000; /* add shadow */
+}
+
+.button:hover {
+  background-color: black;
+}
+
+
+
