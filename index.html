@@ -1,1441 +1,498 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Iris Species Clustering Visualization test</title>
-  <link href="style.css" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script>
+
+<title>Melbourne CBD Tourism Analysis</title>
+
+<!--
+
+Template 2099 Scenic
+
+http://www.tooplate.com/view/2099-scenic
+
+-->
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/magnific-popup.css">
+
+<link rel="stylesheet" href="css/owl.theme.css">
+<link rel="stylesheet" href="css/owl.carousel.css">
+
+<!-- MAIN CSS -->
+<link rel="stylesheet" href="css/tooplate-style.css">
+
+<!-- Mapbox dependencies-->
+
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet' />
+
 </head>
+
 <body>
 
-<div class="header">
-  <h1> Iris Species Clustering Visualization</h1>
+    <div class="preloader">
+        <div class="spinner">
+             <span class="sk-inner-circle"></span>
+        </div>
+   </div>
+
+    <!-- MENU -->
+<div class="navbar custom-navbar navbar-fixed-top" role="navigation">
+    <div class="container">
+         <!-- NAVBAR HEADER -->
+         <div class="navbar-header">
+              <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                   <span class="icon icon-bar"></span>
+                   <span class="icon icon-bar"></span>
+                   <span class="icon icon-bar"></span>
+              </button>
+              <!-- lOGO -->
+              <a href="index.html" class="navbar-brand">Melbourne CBD Tourism</a>
+         </div>
+
+         <!-- MENU LINKS -->
+         <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav navbar-right">
+                   <li><a href="#home" class="smoothScroll">Home</a></li>
+                   <li><a href="#about" class="smoothScroll">Tour Resources</a></li>
+                   <li><a href="#team" class="smoothScroll">Stay & Fun</a></li>  
+                   <li><a href="#contact" class="smoothScroll">Visitor Density</a></li>
+              </ul>
+         </div>
+
+    </div>
 </div>
-<div class = "content"><p>Iris is a genus of 260–300 species of flowering plants with showy flowers. It takes its name from the Greek word for a rainbow, which is also the name for the Greek goddess of the rainbow, Iris. As well as being the scientific name, iris is also widely used as a common name for all Iris species, as well as some belonging to other closely related genera. It is a popular garden flower. Based on the fact that plant expert often decides the species of Iris based on the size of their petal and sepal, it uses width and length of petal and sepal to do the visualization and have a better insight of Iris species and its petal and sepal.<b>Three species: setosa, versicolor, and virginica, are used in this information visualization page. You may click the images below to see more introductions.</b></p>
-</div>
-<div class = "content">
-<a href="https://en.wikipedia.org/wiki/Iris_setosa">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Kosaciec_szczecinkowaty_Iris_setosa.jpg/330px-Kosaciec_szczecinkowaty_Iris_setosa.jpg" width = "240" height="240" />
-</a>
-<a href="https://en.wikipedia.org/wiki/Iris_versicolor">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Blue_Flag%2C_Ottawa.jpg/800px-Blue_Flag%2C_Ottawa.jpg" width = "240" height="240" />
-</a>
-<a href="https://en.wikipedia.org/wiki/Iris_virginica">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Iris_virginica_2.jpg/800px-Iris_virginica_2.jpg" width = "240" height="240" />
-</a>
-<br />
-<br /><br />
-<a href = "https://archive.ics.uci.edu/ml/datasets/iris" target="_blank" class = "button">view source dataset</a>
-<br />
-<br />
-<br />
-<HR style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="80%" color=black SIZE=0.5 />
-<h3 align = center>Scattplot: Sepal Size</h3>
-<HR style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="80%" color=black SIZE=0.5 />
-<br />
-  <canvas id="chart1" width="600" height="300"></canvas>
-<br />
-<br />
-<br />
-<HR style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="80%" color=black SIZE=0.5 />
-<h3 align = center>Bar Chart: Average Size of Petal and Sepal</h3>
-<HR style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="80%" color=black SIZE=0.5 />
-<br />
-  <canvas id="chart2" width="600" height="300"></canvas>
-<br />
-<br />
-<br />
-</div>
-<br />
-<HR style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="80%" color=black SIZE=0.5 />
-<h3 align = center>Boxplot: Petal Size</h3>
-<HR style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="80%" color=black SIZE=0.5 />
-<br />
-<br />
-<br />
 
-<div class='tableauPlaceholder' id='viz1634002218406' style='position: relative'><noscript><a href='#'><img alt='Iris Species Clustering by Shape ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ir&#47;Iris_16340020172280&#47;IrisSpeciesClusteringbyShape&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Iris_16340020172280&#47;IrisSpeciesClusteringbyShape' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ir&#47;Iris_16340020172280&#47;IrisSpeciesClusteringbyShape&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='zh-CN' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1634002218406');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+<!-- HOME -->
+<section id="home" class="parallax-section">
+    <div class="overlay"></div>
+    <div class="container">
+         <div class="row">
+              <div class="col-md-10 col-sm-12">
+                   <div class="home-text">
+                        <h1>Melbourne CBD circle tourism data visualization</h1>
+                        <p>Stay Close, Go further - may digital tourism make your life better</p>
+                        <ul class="section-btn">
+                             <a href="#about" class="smoothScroll"><span data-hover="Discover More">Discover More</span></a>
+                        </ul>
+                   </div>
+              </div>
+         </div>
+    </div>
 
-<script type='text/javascript' src='https://prod-apsoutheast-a.online.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 1536px; height: 666px;'><object class='tableauViz' width='1536' height='666' style='display:none;'><param name='host_url' value='https%3A%2F%2Fprod-apsoutheast-a.online.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='&#47;t&#47;ivunimelb' /><param name='name' value='Iris-1&#47;IrisSpeciesClusteringbyShape' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='showAppBanner' value='false' /></object></div>
+    <!-- Video -->
+    <video controls="" autoplay="" loop="" muted>
+         <source src="videos/video.mp4" type="video/mp4">
+         Your browser does not support the video tag.
+    </video>
+</section>
 
+<section id="about" class="parallax-section">
+    <div class="container-fluid">
+         <div class="row">
+              <div class="col-md-offset-1 col-md-10 col-sm-12">
+                   <div class="about-info">
+                        <h1>Tour Resources</h1>
+                        <br>
+                        <br>
+                        <!-- mapbox cotent -->
+                        <div class="container-fluid" id="mapbox-map">
+                            <div class="row center">
+                                <div class="col-12 col-sm-6 col-md-8" id="map">
+                                    <nav id="menu"></nav>
+                                    <!--Show legend -->
+                                    <div class="map-overlay text-left" id="legend">Landmarks</div>
+                                    <!--Show title -->
+                                    <div class="map-overlay" id="title">
+                                        <h2>Please click on the Tramstops or Hover on the Landmarks.</h2>
+                                        <h2>You may find your place of interests.</h2>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4" id='content'>
+                                    <iframe
+                                    id='street'
+                                    class="container-fluid"
+                                    width="465px"
+                                    height="600px"
+                                    frameborder="0" style="border:0"
+                                    src="">
+                                    </iframe>
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <br>
+                                <p>
+                                    The map shows Melbourne's landmarks, tram routes and stations. The menu bar is displayed at the top right of the map. You can choose one type of landmark according to your preference. When you click or hover landmark or tram stops with the mouse, the detailed information of the location will be displayed on the map. In addition, if you click the corresponding icon with the mouse, the right part of the map will switch to the street view near the location.
+                                </p>
+                            </div>
+                        </div>
 
-<script>
-// dataset
-let table1 = [{
-    "Id": 1,
-    "SepalLengthCm": 5.1,
-    "SepalWidthCm": 3.5,
-    "PetalLengthCm": 1.4,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 2,
-    "SepalLengthCm": 4.9,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 1.4,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 3,
-    "SepalLengthCm": 4.7,
-    "SepalWidthCm": 3.2,
-    "PetalLengthCm": 1.3,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 4,
-    "SepalLengthCm": 4.6,
-    "SepalWidthCm": 3.1,
-    "PetalLengthCm": 1.5,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 5,
-    "SepalLengthCm": 5,
-    "SepalWidthCm": 3.6,
-    "PetalLengthCm": 1.4,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 6,
-    "SepalLengthCm": 5.4,
-    "SepalWidthCm": 3.9,
-    "PetalLengthCm": 1.7,
-    "PetalWidthCm": 0.4,
-    "Species": "setosa"
-  },
-  {
-    "Id": 7,
-    "SepalLengthCm": 4.6,
-    "SepalWidthCm": 3.4,
-    "PetalLengthCm": 1.4,
-    "PetalWidthCm": 0.3,
-    "Species": "setosa"
-  },
-  {
-    "Id": 8,
-    "SepalLengthCm": 5,
-    "SepalWidthCm": 3.4,
-    "PetalLengthCm": 1.5,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 9,
-    "SepalLengthCm": 4.4,
-    "SepalWidthCm": 2.9,
-    "PetalLengthCm": 1.4,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 10,
-    "SepalLengthCm": 4.9,
-    "SepalWidthCm": 3.1,
-    "PetalLengthCm": 1.5,
-    "PetalWidthCm": 0.1,
-    "Species": "setosa"
-  },
-  {
-    "Id": 11,
-    "SepalLengthCm": 5.4,
-    "SepalWidthCm": 3.7,
-    "PetalLengthCm": 1.5,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 12,
-    "SepalLengthCm": 4.8,
-    "SepalWidthCm": 3.4,
-    "PetalLengthCm": 1.6,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 13,
-    "SepalLengthCm": 4.8,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 1.4,
-    "PetalWidthCm": 0.1,
-    "Species": "setosa"
-  },
-  {
-    "Id": 14,
-    "SepalLengthCm": 4.3,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 1.1,
-    "PetalWidthCm": 0.1,
-    "Species": "setosa"
-  },
-  {
-    "Id": 15,
-    "SepalLengthCm": 5.8,
-    "SepalWidthCm": 4,
-    "PetalLengthCm": 1.2,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 16,
-    "SepalLengthCm": 5.7,
-    "SepalWidthCm": 4.4,
-    "PetalLengthCm": 1.5,
-    "PetalWidthCm": 0.4,
-    "Species": "setosa"
-  },
-  {
-    "Id": 17,
-    "SepalLengthCm": 5.4,
-    "SepalWidthCm": 3.9,
-    "PetalLengthCm": 1.3,
-    "PetalWidthCm": 0.4,
-    "Species": "setosa"
-  },
-  {
-    "Id": 18,
-    "SepalLengthCm": 5.1,
-    "SepalWidthCm": 3.5,
-    "PetalLengthCm": 1.4,
-    "PetalWidthCm": 0.3,
-    "Species": "setosa"
-  },
-  {
-    "Id": 19,
-    "SepalLengthCm": 5.7,
-    "SepalWidthCm": 3.8,
-    "PetalLengthCm": 1.7,
-    "PetalWidthCm": 0.3,
-    "Species": "setosa"
-  },
-  {
-    "Id": 20,
-    "SepalLengthCm": 5.1,
-    "SepalWidthCm": 3.8,
-    "PetalLengthCm": 1.5,
-    "PetalWidthCm": 0.3,
-    "Species": "setosa"
-  },
-  {
-    "Id": 21,
-    "SepalLengthCm": 5.4,
-    "SepalWidthCm": 3.4,
-    "PetalLengthCm": 1.7,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 22,
-    "SepalLengthCm": 5.1,
-    "SepalWidthCm": 3.7,
-    "PetalLengthCm": 1.5,
-    "PetalWidthCm": 0.4,
-    "Species": "setosa"
-  },
-  {
-    "Id": 23,
-    "SepalLengthCm": 4.6,
-    "SepalWidthCm": 3.6,
-    "PetalLengthCm": 1,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 24,
-    "SepalLengthCm": 5.1,
-    "SepalWidthCm": 3.3,
-    "PetalLengthCm": 1.7,
-    "PetalWidthCm": 0.5,
-    "Species": "setosa"
-  },
-  {
-    "Id": 25,
-    "SepalLengthCm": 4.8,
-    "SepalWidthCm": 3.4,
-    "PetalLengthCm": 1.9,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 26,
-    "SepalLengthCm": 5,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 1.6,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 27,
-    "SepalLengthCm": 5,
-    "SepalWidthCm": 3.4,
-    "PetalLengthCm": 1.6,
-    "PetalWidthCm": 0.4,
-    "Species": "setosa"
-  },
-  {
-    "Id": 28,
-    "SepalLengthCm": 5.2,
-    "SepalWidthCm": 3.5,
-    "PetalLengthCm": 1.5,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 29,
-    "SepalLengthCm": 5.2,
-    "SepalWidthCm": 3.4,
-    "PetalLengthCm": 1.4,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 30,
-    "SepalLengthCm": 4.7,
-    "SepalWidthCm": 3.2,
-    "PetalLengthCm": 1.6,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 31,
-    "SepalLengthCm": 4.8,
-    "SepalWidthCm": 3.1,
-    "PetalLengthCm": 1.6,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 32,
-    "SepalLengthCm": 5.4,
-    "SepalWidthCm": 3.4,
-    "PetalLengthCm": 1.5,
-    "PetalWidthCm": 0.4,
-    "Species": "setosa"
-  },
-  {
-    "Id": 33,
-    "SepalLengthCm": 5.2,
-    "SepalWidthCm": 4.1,
-    "PetalLengthCm": 1.5,
-    "PetalWidthCm": 0.1,
-    "Species": "setosa"
-  },
-  {
-    "Id": 34,
-    "SepalLengthCm": 5.5,
-    "SepalWidthCm": 4.2,
-    "PetalLengthCm": 1.4,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 35,
-    "SepalLengthCm": 4.9,
-    "SepalWidthCm": 3.1,
-    "PetalLengthCm": 1.5,
-    "PetalWidthCm": 0.1,
-    "Species": "setosa"
-  },
-  {
-    "Id": 36,
-    "SepalLengthCm": 5,
-    "SepalWidthCm": 3.2,
-    "PetalLengthCm": 1.2,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 37,
-    "SepalLengthCm": 5.5,
-    "SepalWidthCm": 3.5,
-    "PetalLengthCm": 1.3,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 38,
-    "SepalLengthCm": 4.9,
-    "SepalWidthCm": 3.1,
-    "PetalLengthCm": 1.5,
-    "PetalWidthCm": 0.1,
-    "Species": "setosa"
-  },
-  {
-    "Id": 39,
-    "SepalLengthCm": 4.4,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 1.3,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 40,
-    "SepalLengthCm": 5.1,
-    "SepalWidthCm": 3.4,
-    "PetalLengthCm": 1.5,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 41,
-    "SepalLengthCm": 5,
-    "SepalWidthCm": 3.5,
-    "PetalLengthCm": 1.3,
-    "PetalWidthCm": 0.3,
-    "Species": "setosa"
-  },
-  {
-    "Id": 42,
-    "SepalLengthCm": 4.5,
-    "SepalWidthCm": 2.3,
-    "PetalLengthCm": 1.3,
-    "PetalWidthCm": 0.3,
-    "Species": "setosa"
-  },
-  {
-    "Id": 43,
-    "SepalLengthCm": 4.4,
-    "SepalWidthCm": 3.2,
-    "PetalLengthCm": 1.3,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 44,
-    "SepalLengthCm": 5,
-    "SepalWidthCm": 3.5,
-    "PetalLengthCm": 1.6,
-    "PetalWidthCm": 0.6,
-    "Species": "setosa"
-  },
-  {
-    "Id": 45,
-    "SepalLengthCm": 5.1,
-    "SepalWidthCm": 3.8,
-    "PetalLengthCm": 1.9,
-    "PetalWidthCm": 0.4,
-    "Species": "setosa"
-  },
-  {
-    "Id": 46,
-    "SepalLengthCm": 4.8,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 1.4,
-    "PetalWidthCm": 0.3,
-    "Species": "setosa"
-  },
-  {
-    "Id": 47,
-    "SepalLengthCm": 5.1,
-    "SepalWidthCm": 3.8,
-    "PetalLengthCm": 1.6,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 48,
-    "SepalLengthCm": 4.6,
-    "SepalWidthCm": 3.2,
-    "PetalLengthCm": 1.4,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 49,
-    "SepalLengthCm": 5.3,
-    "SepalWidthCm": 3.7,
-    "PetalLengthCm": 1.5,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  },
-  {
-    "Id": 50,
-    "SepalLengthCm": 5,
-    "SepalWidthCm": 3.3,
-    "PetalLengthCm": 1.4,
-    "PetalWidthCm": 0.2,
-    "Species": "setosa"
-  }
-]
+                        <script>
+                            var myLat = "-37.8062917";
+                            var myLan = "144.9594483";
+                            mapboxgl.accessToken = 'pk.eyJ1IjoidmljdG9yNDIzIiwiYSI6ImNrdGs4N3ExajA3ZDAyb3A1NzdqYjl6bjkifQ.UZ5945aOIQJmC3mZaA6KyQ';
+                                var map = new mapboxgl.Map({
+                                container: 'map',
+                                style: "mapbox://styles/victor423/ckup73oa305u418nxvwpvezp7/draft",
+                                center: [144.965, -37.815],
+                                zoom: 13.80
+                            })
+                            let streetView = document.getElementById("street");
+                            let streetSrc = "https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAmRpjggJlwIau3LgCxVIFdStRAxpk2EuA&&location="+myLat+","+myLan+"&heading=220&pitch=0&fov=80";
+                            streetView.setAttribute('src', streetSrc);
+                            function a(){
+                                streetSrc = "https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAmRpjggJlwIau3LgCxVIFdStRAxpk2EuA&&location="+myLat+","+myLan+"&heading=220&pitch=0&fov=80";
+                                streetView.setAttribute('src', streetSrc);
+                            }
+                            map.on('load', () => {
+                                const layers = [
+                                    'Hospital',
+                                    'Place of Assembly',
+                                    'Place of Leisure',
+                                    'Place of Worship',
+                                    'Store/Carpark/Residential',
+                                    'Transport',
+                                    'Tramstops',
+                                    'Others'
+                                ];
+                                const icons =[
+                                    'Icon/Hosptial.png',
+                                    'Icon/Assembly.png',
+                                    'Icon/Leisure.png',
+                                    'Icon/Worship.png',
+                                    'Icon/Mixed.png',
+                                    'Icon/Transport.png',
+                                    'Icon/Tramstops.png',
+                                    'Icon/Others.png'
+                                ]
+                                const legend = document.getElementById('legend');
+                                //Refer to the code of lab5 .
+                                layers.forEach((layer, i) => {
+                                    const item = document.createElement('div');
+                                    const key = document.createElement('span');
+                                    key.className = 'legend-key';
+                                    const value = document.createElement('span');
+                                    const icon = document.createElement('img');
+                                    icon.className = 'legend-key'
+                                    icon.src = icons[i];
+                                    key.appendChild(icon);
+                                    value.innerHTML = `${layer}`;
+                                    item.appendChild(key);
+                                    item.appendChild(value);
+                                    legend.appendChild(item);
+                                });
+                                var leableLayerIds = ['Hospital', 'Place of Assembly', 'Place of Leisure','Place of Worship', 'Store_Carpark_Residential', 'Transport', 'Others'];
+                                for (var id of leableLayerIds){
+                                    map.setLayoutProperty(id, 'visibility', 'none');
+                                }
+                                map.on(
+                                    'click',
+                                    (data) => {
+                                        const temp = map.queryRenderedFeatures(data.point, {
+                                            layers: ['Tramstops']
+                                        }); 
+                                        //console.log(temp)
+                                        if (!temp.length) {
+                                            return;
+                                        }
+                                        const info = temp[0];
+                                        myLat = data.lngLat.lat+"";
+                                        myLan = data.lngLat.lng+"";
+                                        console.log(data.lngLat);
+                                        console.log(myLat, myLan);
+                                        a();
+                                        const popup = new mapboxgl.Popup({ offset: [0, -15] }).setLngLat(data.lngLat)
+                                            .setHTML(
+                                            `<h4>Stop number: ${info.properties.mccid_int}</h4><h4>Stop name: ${info.properties.name} </h4>`
+                                            )
+                                            .addTo(map);
+                                });
+                            });
+                            map.on('idle', () => {
+                                // If these two layers were not added to the map, abort
+                                if (!map.getLayer('Hospital') || !map.getLayer('Place of Assembly')) {
+                                    return;
+                                }
+                                console.log('222');
+                                var toggleableLayerIds = ['Hospital', 'Place of Assembly', 'Place of Leisure','Place of Worship', 'Store_Carpark_Residential', 'Transport', 'Tramstops', 'Others'];
+                                // Set up the corresponding toggle button for each layer.
+                                for (var id of toggleableLayerIds) {
+                                    // Skip layers that already have a button set up.
+                                    if (document.getElementById(id)) {
+                                        continue;
+                                    }
 
-let table2 = [{
-    "Id": 51,
-    "SepalLengthCm": 7,
-    "SepalWidthCm": 3.2,
-    "PetalLengthCm": 4.7,
-    "PetalWidthCm": 1.4,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 52,
-    "SepalLengthCm": 6.4,
-    "SepalWidthCm": 3.2,
-    "PetalLengthCm": 4.5,
-    "PetalWidthCm": 1.5,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 53,
-    "SepalLengthCm": 6.9,
-    "SepalWidthCm": 3.1,
-    "PetalLengthCm": 4.9,
-    "PetalWidthCm": 1.5,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 54,
-    "SepalLengthCm": 5.5,
-    "SepalWidthCm": 2.3,
-    "PetalLengthCm": 4,
-    "PetalWidthCm": 1.3,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 55,
-    "SepalLengthCm": 6.5,
-    "SepalWidthCm": 2.8,
-    "PetalLengthCm": 4.6,
-    "PetalWidthCm": 1.5,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 56,
-    "SepalLengthCm": 5.7,
-    "SepalWidthCm": 2.8,
-    "PetalLengthCm": 4.5,
-    "PetalWidthCm": 1.3,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 57,
-    "SepalLengthCm": 6.3,
-    "SepalWidthCm": 3.3,
-    "PetalLengthCm": 4.7,
-    "PetalWidthCm": 1.6,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 58,
-    "SepalLengthCm": 4.9,
-    "SepalWidthCm": 2.4,
-    "PetalLengthCm": 3.3,
-    "PetalWidthCm": 1,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 59,
-    "SepalLengthCm": 6.6,
-    "SepalWidthCm": 2.9,
-    "PetalLengthCm": 4.6,
-    "PetalWidthCm": 1.3,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 60,
-    "SepalLengthCm": 5.2,
-    "SepalWidthCm": 2.7,
-    "PetalLengthCm": 3.9,
-    "PetalWidthCm": 1.4,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 61,
-    "SepalLengthCm": 5,
-    "SepalWidthCm": 2,
-    "PetalLengthCm": 3.5,
-    "PetalWidthCm": 1,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 62,
-    "SepalLengthCm": 5.9,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 4.2,
-    "PetalWidthCm": 1.5,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 63,
-    "SepalLengthCm": 6,
-    "SepalWidthCm": 2.2,
-    "PetalLengthCm": 4,
-    "PetalWidthCm": 1,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 64,
-    "SepalLengthCm": 6.1,
-    "SepalWidthCm": 2.9,
-    "PetalLengthCm": 4.7,
-    "PetalWidthCm": 1.4,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 65,
-    "SepalLengthCm": 5.6,
-    "SepalWidthCm": 2.9,
-    "PetalLengthCm": 3.6,
-    "PetalWidthCm": 1.3,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 66,
-    "SepalLengthCm": 6.7,
-    "SepalWidthCm": 3.1,
-    "PetalLengthCm": 4.4,
-    "PetalWidthCm": 1.4,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 67,
-    "SepalLengthCm": 5.6,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 4.5,
-    "PetalWidthCm": 1.5,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 68,
-    "SepalLengthCm": 5.8,
-    "SepalWidthCm": 2.7,
-    "PetalLengthCm": 4.1,
-    "PetalWidthCm": 1,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 69,
-    "SepalLengthCm": 6.2,
-    "SepalWidthCm": 2.2,
-    "PetalLengthCm": 4.5,
-    "PetalWidthCm": 1.5,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 70,
-    "SepalLengthCm": 5.6,
-    "SepalWidthCm": 2.5,
-    "PetalLengthCm": 3.9,
-    "PetalWidthCm": 1.1,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 71,
-    "SepalLengthCm": 5.9,
-    "SepalWidthCm": 3.2,
-    "PetalLengthCm": 4.8,
-    "PetalWidthCm": 1.8,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 72,
-    "SepalLengthCm": 6.1,
-    "SepalWidthCm": 2.8,
-    "PetalLengthCm": 4,
-    "PetalWidthCm": 1.3,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 73,
-    "SepalLengthCm": 6.3,
-    "SepalWidthCm": 2.5,
-    "PetalLengthCm": 4.9,
-    "PetalWidthCm": 1.5,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 74,
-    "SepalLengthCm": 6.1,
-    "SepalWidthCm": 2.8,
-    "PetalLengthCm": 4.7,
-    "PetalWidthCm": 1.2,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 75,
-    "SepalLengthCm": 6.4,
-    "SepalWidthCm": 2.9,
-    "PetalLengthCm": 4.3,
-    "PetalWidthCm": 1.3,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 76,
-    "SepalLengthCm": 6.6,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 4.4,
-    "PetalWidthCm": 1.4,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 77,
-    "SepalLengthCm": 6.8,
-    "SepalWidthCm": 2.8,
-    "PetalLengthCm": 4.8,
-    "PetalWidthCm": 1.4,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 78,
-    "SepalLengthCm": 6.7,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 5,
-    "PetalWidthCm": 1.7,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 79,
-    "SepalLengthCm": 6,
-    "SepalWidthCm": 2.9,
-    "PetalLengthCm": 4.5,
-    "PetalWidthCm": 1.5,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 80,
-    "SepalLengthCm": 5.7,
-    "SepalWidthCm": 2.6,
-    "PetalLengthCm": 3.5,
-    "PetalWidthCm": 1,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 81,
-    "SepalLengthCm": 5.5,
-    "SepalWidthCm": 2.4,
-    "PetalLengthCm": 3.8,
-    "PetalWidthCm": 1.1,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 82,
-    "SepalLengthCm": 5.5,
-    "SepalWidthCm": 2.4,
-    "PetalLengthCm": 3.7,
-    "PetalWidthCm": 1,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 83,
-    "SepalLengthCm": 5.8,
-    "SepalWidthCm": 2.7,
-    "PetalLengthCm": 3.9,
-    "PetalWidthCm": 1.2,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 84,
-    "SepalLengthCm": 6,
-    "SepalWidthCm": 2.7,
-    "PetalLengthCm": 5.1,
-    "PetalWidthCm": 1.6,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 85,
-    "SepalLengthCm": 5.4,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 4.5,
-    "PetalWidthCm": 1.5,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 86,
-    "SepalLengthCm": 6,
-    "SepalWidthCm": 3.4,
-    "PetalLengthCm": 4.5,
-    "PetalWidthCm": 1.6,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 87,
-    "SepalLengthCm": 6.7,
-    "SepalWidthCm": 3.1,
-    "PetalLengthCm": 4.7,
-    "PetalWidthCm": 1.5,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 88,
-    "SepalLengthCm": 6.3,
-    "SepalWidthCm": 2.3,
-    "PetalLengthCm": 4.4,
-    "PetalWidthCm": 1.3,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 89,
-    "SepalLengthCm": 5.6,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 4.1,
-    "PetalWidthCm": 1.3,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 90,
-    "SepalLengthCm": 5.5,
-    "SepalWidthCm": 2.5,
-    "PetalLengthCm": 4,
-    "PetalWidthCm": 1.3,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 91,
-    "SepalLengthCm": 5.5,
-    "SepalWidthCm": 2.6,
-    "PetalLengthCm": 4.4,
-    "PetalWidthCm": 1.2,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 92,
-    "SepalLengthCm": 6.1,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 4.6,
-    "PetalWidthCm": 1.4,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 93,
-    "SepalLengthCm": 5.8,
-    "SepalWidthCm": 2.6,
-    "PetalLengthCm": 4,
-    "PetalWidthCm": 1.2,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 94,
-    "SepalLengthCm": 5,
-    "SepalWidthCm": 2.3,
-    "PetalLengthCm": 3.3,
-    "PetalWidthCm": 1,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 95,
-    "SepalLengthCm": 5.6,
-    "SepalWidthCm": 2.7,
-    "PetalLengthCm": 4.2,
-    "PetalWidthCm": 1.3,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 96,
-    "SepalLengthCm": 5.7,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 4.2,
-    "PetalWidthCm": 1.2,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 97,
-    "SepalLengthCm": 5.7,
-    "SepalWidthCm": 2.9,
-    "PetalLengthCm": 4.2,
-    "PetalWidthCm": 1.3,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 98,
-    "SepalLengthCm": 6.2,
-    "SepalWidthCm": 2.9,
-    "PetalLengthCm": 4.3,
-    "PetalWidthCm": 1.3,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 99,
-    "SepalLengthCm": 5.1,
-    "SepalWidthCm": 2.5,
-    "PetalLengthCm": 3,
-    "PetalWidthCm": 1.1,
-    "Species": "versicolor"
-  },
-  {
-    "Id": 100,
-    "SepalLengthCm": 5.7,
-    "SepalWidthCm": 2.8,
-    "PetalLengthCm": 4.1,
-    "PetalWidthCm": 1.3,
-    "Species": "versicolor"
-  }
-]
+                                    // Create a link.
+                                    var link = document.createElement('a');
+                                    link.id = id;
+                                    link.href = '#';
+                                    link.textContent = id;
+                                    link.className = '';
+                                    // Show or hide layer when the toggle is clicked.
+                                    link.onclick = function (e) {
+                                        var clickedLayer = this.textContent;
+                                        e.preventDefault();
+                                        e.stopPropagation();
 
-let table3 = [{
-    "Id": 101,
-    "SepalLengthCm": 6.3,
-    "SepalWidthCm": 3.3,
-    "PetalLengthCm": 6,
-    "PetalWidthCm": 2.5,
-    "Species": "virginica"
-  },
-  {
-    "Id": 102,
-    "SepalLengthCm": 5.8,
-    "SepalWidthCm": 2.7,
-    "PetalLengthCm": 5.1,
-    "PetalWidthCm": 1.9,
-    "Species": "virginica"
-  },
-  {
-    "Id": 103,
-    "SepalLengthCm": 7.1,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 5.9,
-    "PetalWidthCm": 2.1,
-    "Species": "virginica"
-  },
-  {
-    "Id": 104,
-    "SepalLengthCm": 6.3,
-    "SepalWidthCm": 2.9,
-    "PetalLengthCm": 5.6,
-    "PetalWidthCm": 1.8,
-    "Species": "virginica"
-  },
-  {
-    "Id": 105,
-    "SepalLengthCm": 6.5,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 5.8,
-    "PetalWidthCm": 2.2,
-    "Species": "virginica"
-  },
-  {
-    "Id": 106,
-    "SepalLengthCm": 7.6,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 6.6,
-    "PetalWidthCm": 2.1,
-    "Species": "virginica"
-  },
-  {
-    "Id": 107,
-    "SepalLengthCm": 4.9,
-    "SepalWidthCm": 2.5,
-    "PetalLengthCm": 4.5,
-    "PetalWidthCm": 1.7,
-    "Species": "virginica"
-  },
-  {
-    "Id": 108,
-    "SepalLengthCm": 7.3,
-    "SepalWidthCm": 2.9,
-    "PetalLengthCm": 6.3,
-    "PetalWidthCm": 1.8,
-    "Species": "virginica"
-  },
-  {
-    "Id": 109,
-    "SepalLengthCm": 6.7,
-    "SepalWidthCm": 2.5,
-    "PetalLengthCm": 5.8,
-    "PetalWidthCm": 1.8,
-    "Species": "virginica"
-  },
-  {
-    "Id": 110,
-    "SepalLengthCm": 7.2,
-    "SepalWidthCm": 3.6,
-    "PetalLengthCm": 6.1,
-    "PetalWidthCm": 2.5,
-    "Species": "virginica"
-  },
-  {
-    "Id": 111,
-    "SepalLengthCm": 6.5,
-    "SepalWidthCm": 3.2,
-    "PetalLengthCm": 5.1,
-    "PetalWidthCm": 2,
-    "Species": "virginica"
-  },
-  {
-    "Id": 112,
-    "SepalLengthCm": 6.4,
-    "SepalWidthCm": 2.7,
-    "PetalLengthCm": 5.3,
-    "PetalWidthCm": 1.9,
-    "Species": "virginica"
-  },
-  {
-    "Id": 113,
-    "SepalLengthCm": 6.8,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 5.5,
-    "PetalWidthCm": 2.1,
-    "Species": "virginica"
-  },
-  {
-    "Id": 114,
-    "SepalLengthCm": 5.7,
-    "SepalWidthCm": 2.5,
-    "PetalLengthCm": 5,
-    "PetalWidthCm": 2,
-    "Species": "virginica"
-  },
-  {
-    "Id": 115,
-    "SepalLengthCm": 5.8,
-    "SepalWidthCm": 2.8,
-    "PetalLengthCm": 5.1,
-    "PetalWidthCm": 2.4,
-    "Species": "virginica"
-  },
-  {
-    "Id": 116,
-    "SepalLengthCm": 6.4,
-    "SepalWidthCm": 3.2,
-    "PetalLengthCm": 5.3,
-    "PetalWidthCm": 2.3,
-    "Species": "virginica"
-  },
-  {
-    "Id": 117,
-    "SepalLengthCm": 6.5,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 5.5,
-    "PetalWidthCm": 1.8,
-    "Species": "virginica"
-  },
-  {
-    "Id": 118,
-    "SepalLengthCm": 7.7,
-    "SepalWidthCm": 3.8,
-    "PetalLengthCm": 6.7,
-    "PetalWidthCm": 2.2,
-    "Species": "virginica"
-  },
-  {
-    "Id": 119,
-    "SepalLengthCm": 7.7,
-    "SepalWidthCm": 2.6,
-    "PetalLengthCm": 6.9,
-    "PetalWidthCm": 2.3,
-    "Species": "virginica"
-  },
-  {
-    "Id": 120,
-    "SepalLengthCm": 6,
-    "SepalWidthCm": 2.2,
-    "PetalLengthCm": 5,
-    "PetalWidthCm": 1.5,
-    "Species": "virginica"
-  },
-  {
-    "Id": 121,
-    "SepalLengthCm": 6.9,
-    "SepalWidthCm": 3.2,
-    "PetalLengthCm": 5.7,
-    "PetalWidthCm": 2.3,
-    "Species": "virginica"
-  },
-  {
-    "Id": 122,
-    "SepalLengthCm": 5.6,
-    "SepalWidthCm": 2.8,
-    "PetalLengthCm": 4.9,
-    "PetalWidthCm": 2,
-    "Species": "virginica"
-  },
-  {
-    "Id": 123,
-    "SepalLengthCm": 7.7,
-    "SepalWidthCm": 2.8,
-    "PetalLengthCm": 6.7,
-    "PetalWidthCm": 2,
-    "Species": "virginica"
-  },
-  {
-    "Id": 124,
-    "SepalLengthCm": 6.3,
-    "SepalWidthCm": 2.7,
-    "PetalLengthCm": 4.9,
-    "PetalWidthCm": 1.8,
-    "Species": "virginica"
-  },
-  {
-    "Id": 125,
-    "SepalLengthCm": 6.7,
-    "SepalWidthCm": 3.3,
-    "PetalLengthCm": 5.7,
-    "PetalWidthCm": 2.1,
-    "Species": "virginica"
-  },
-  {
-    "Id": 126,
-    "SepalLengthCm": 7.2,
-    "SepalWidthCm": 3.2,
-    "PetalLengthCm": 6,
-    "PetalWidthCm": 1.8,
-    "Species": "virginica"
-  },
-  {
-    "Id": 127,
-    "SepalLengthCm": 6.2,
-    "SepalWidthCm": 2.8,
-    "PetalLengthCm": 4.8,
-    "PetalWidthCm": 1.8,
-    "Species": "virginica"
-  },
-  {
-    "Id": 128,
-    "SepalLengthCm": 6.1,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 4.9,
-    "PetalWidthCm": 1.8,
-    "Species": "virginica"
-  },
-  {
-    "Id": 129,
-    "SepalLengthCm": 6.4,
-    "SepalWidthCm": 2.8,
-    "PetalLengthCm": 5.6,
-    "PetalWidthCm": 2.1,
-    "Species": "virginica"
-  },
-  {
-    "Id": 130,
-    "SepalLengthCm": 7.2,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 5.8,
-    "PetalWidthCm": 1.6,
-    "Species": "virginica"
-  },
-  {
-    "Id": 131,
-    "SepalLengthCm": 7.4,
-    "SepalWidthCm": 2.8,
-    "PetalLengthCm": 6.1,
-    "PetalWidthCm": 1.9,
-    "Species": "virginica"
-  },
-  {
-    "Id": 132,
-    "SepalLengthCm": 7.9,
-    "SepalWidthCm": 3.8,
-    "PetalLengthCm": 6.4,
-    "PetalWidthCm": 2,
-    "Species": "virginica"
-  },
-  {
-    "Id": 133,
-    "SepalLengthCm": 6.4,
-    "SepalWidthCm": 2.8,
-    "PetalLengthCm": 5.6,
-    "PetalWidthCm": 2.2,
-    "Species": "virginica"
-  },
-  {
-    "Id": 134,
-    "SepalLengthCm": 6.3,
-    "SepalWidthCm": 2.8,
-    "PetalLengthCm": 5.1,
-    "PetalWidthCm": 1.5,
-    "Species": "virginica"
-  },
-  {
-    "Id": 135,
-    "SepalLengthCm": 6.1,
-    "SepalWidthCm": 2.6,
-    "PetalLengthCm": 5.6,
-    "PetalWidthCm": 1.4,
-    "Species": "virginica"
-  },
-  {
-    "Id": 136,
-    "SepalLengthCm": 7.7,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 6.1,
-    "PetalWidthCm": 2.3,
-    "Species": "virginica"
-  },
-  {
-    "Id": 137,
-    "SepalLengthCm": 6.3,
-    "SepalWidthCm": 3.4,
-    "PetalLengthCm": 5.6,
-    "PetalWidthCm": 2.4,
-    "Species": "virginica"
-  },
-  {
-    "Id": 138,
-    "SepalLengthCm": 6.4,
-    "SepalWidthCm": 3.1,
-    "PetalLengthCm": 5.5,
-    "PetalWidthCm": 1.8,
-    "Species": "virginica"
-  },
-  {
-    "Id": 139,
-    "SepalLengthCm": 6,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 4.8,
-    "PetalWidthCm": 1.8,
-    "Species": "virginica"
-  },
-  {
-    "Id": 140,
-    "SepalLengthCm": 6.9,
-    "SepalWidthCm": 3.1,
-    "PetalLengthCm": 5.4,
-    "PetalWidthCm": 2.1,
-    "Species": "virginica"
-  },
-  {
-    "Id": 141,
-    "SepalLengthCm": 6.7,
-    "SepalWidthCm": 3.1,
-    "PetalLengthCm": 5.6,
-    "PetalWidthCm": 2.4,
-    "Species": "virginica"
-  },
-  {
-    "Id": 142,
-    "SepalLengthCm": 6.9,
-    "SepalWidthCm": 3.1,
-    "PetalLengthCm": 5.1,
-    "PetalWidthCm": 2.3,
-    "Species": "virginica"
-  },
-  {
-    "Id": 143,
-    "SepalLengthCm": 5.8,
-    "SepalWidthCm": 2.7,
-    "PetalLengthCm": 5.1,
-    "PetalWidthCm": 1.9,
-    "Species": "virginica"
-  },
-  {
-    "Id": 144,
-    "SepalLengthCm": 6.8,
-    "SepalWidthCm": 3.2,
-    "PetalLengthCm": 5.9,
-    "PetalWidthCm": 2.3,
-    "Species": "virginica"
-  },
-  {
-    "Id": 145,
-    "SepalLengthCm": 6.7,
-    "SepalWidthCm": 3.3,
-    "PetalLengthCm": 5.7,
-    "PetalWidthCm": 2.5,
-    "Species": "virginica"
-  },
-  {
-    "Id": 146,
-    "SepalLengthCm": 6.7,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 5.2,
-    "PetalWidthCm": 2.3,
-    "Species": "virginica"
-  },
-  {
-    "Id": 147,
-    "SepalLengthCm": 6.3,
-    "SepalWidthCm": 2.5,
-    "PetalLengthCm": 5,
-    "PetalWidthCm": 1.9,
-    "Species": "virginica"
-  },
-  {
-    "Id": 148,
-    "SepalLengthCm": 6.5,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 5.2,
-    "PetalWidthCm": 2,
-    "Species": "virginica"
-  },
-  {
-    "Id": 149,
-    "SepalLengthCm": 6.2,
-    "SepalWidthCm": 3.4,
-    "PetalLengthCm": 5.4,
-    "PetalWidthCm": 2.3,
-    "Species": "virginica"
-  },
-  {
-    "Id": 150,
-    "SepalLengthCm": 5.9,
-    "SepalWidthCm": 3,
-    "PetalLengthCm": 5.1,
-    "PetalWidthCm": 1.8,
-    "Species": "virginica"
-  }
-]
+                                        var visibility = map.getLayoutProperty(
+                                            clickedLayer,
+                                            'visibility'
+                                        );
 
-let table4 = [{
-    "Species": "setosa",
-    "SepalLengthAvg": 5.04,
-    "SepalWidthAvg": 3.46,
-    "PetalLengthAvg": 1.47,
-    "PetalWidthAvg": 0.25
-  },
-  {
-    "Species": "versicolor",
-    "SepalLengthAvg": 5.3,
-    "SepalWidthAvg": 3.22,
-    "PetalLengthAvg": 2.32,
-    "PetalWidthAvg": 0.67
-  },
-  {
-    "Species": "virginica",
-    "SepalLengthAvg": 5.77,
-    "SepalWidthAvg": 3.06,
-    "PetalLengthAvg": 3.56,
-    "PetalWidthAvg": 1.09
-  }
-]
+                                        // Toggle layer visibility by changing the layout object's visibility property.
+                                        if (visibility === 'visible') {
+                                            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                                            this.className = '';
+                                        } else {
+                                            this.className = 'active';
+                                            map.setLayoutProperty(
+                                                clickedLayer,
+                                                'visibility',
+                                                'visible'
+                                            );
+                                            map.on(
+                                                'click',
+                                                (data) => {
+                                                    const temp = map.queryRenderedFeatures(data.point, {
+                                                        layers: [clickedLayer]
+                                                    }); 
+                                                    if (!temp.length) {
+                                                        return;
+                                                    }
+                                                    myLat = data.lngLat.lat+"";
+                                                    myLan = data.lngLat.lng+"";
+                                                    console.log(data.lngLat);
+                                                    console.log(myLat, myLan);
+                                                    a();
+                                            });
+                                            const popup = new mapboxgl.Popup({
+                                                closeButton: false,
+                                                closeOnClick: false
+                                            });
+                                            map.on('mouseenter', clickedLayer, (e) => {
+                                            map.getCanvas().style.cursor = 'pointer';
+                                            console.log(e);
+                                            point1 = e.lngLat;
+                                            console.log(point1);
+                                            const coordinates = e.features[0].geometry.coordinates.slice();
+                                            const barsHover = 'Location theme: ' + e.features[0].properties['Sub Theme'] + ', Location name: ' + e.features[0].properties['Feature Name'];
+                                        
+                                            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                                                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                                            }
+                                            
+                                            popup.setLngLat(coordinates).setHTML(barsHover).addTo(map);
+                                            });
+                                            
+                                            map.on('mouseleave', clickedLayer, () => {
+                                                map.getCanvas().style.cursor = '';
+                                                popup.remove();
+                                            });
+                                        }};
 
-// - chart.js -
+                                    var layers = document.getElementById('menu');
+                                    layers.appendChild(link);
+                                }
+                            });
+                        </script>
+<!-- mapbox cotent -->
+                    </div>
+              </div>
+         </div>
+    </div>
+</section>
 
-let chart1 = new Chart('chart1', {
-  type: 'scatter',
-  data: {
-    datasets: [{
-        data: table1,
-        label: "setosa",
-        backgroundColor: "#FF5733",
-        parsing: {
-          xAxisKey: 'SepalLengthCm',
-          yAxisKey: 'SepalWidthCm'
-        }
-      },
-      {
-        data: table2,
-        label: "versicolor",
-        backgroundColor: "#FFC300",
-        parsing: {
-          xAxisKey: 'SepalLengthCm',
-          yAxisKey: 'SepalWidthCm'
-        }
-      },
-      {
-        data: table3,
-        label: "virginica",
-        backgroundColor: "#5BBBFD",
-        parsing: {
-          xAxisKey: 'SepalLengthCm',
-          yAxisKey: 'SepalWidthCm'
-        }
-      }
-    ]
-  },
-  options: {
-    scales: {
-      x: {
-        grid: {},
-        ticks: {},
-        title: {display: true, text:"Sepal length (cm)"}
-      },
-      y: {
-        grid: {},
-        ticks: {},
-        title: {display:true, text:"Sepal width (cm)"}
-      }
-    },
-    animation: {},
-    plugins: {
-      legend: {},
-      title: {display:true,
-      text: "Distribution of three species in sepal width and length"},
-      tooltip: {xAlign: 'left',
-        yAlign: 'center',
-        displayColors: false,
-        titleAlign: 'center',
-        bodyAlign: 'center'}
-    }
-  }
-});
+<section id="team" class="parallax-section">
+    <div class="container-fluid">
+         <div class="row">
+             <div class="col-4">
+                <!-- SECTION TITLE -->
+                <div class="section-title">
+                    <h1>Stay & Fun</h1>
+                </div>
+            </div> 
+            <div class="row center">
+                <div id="tableau1">
+                    <div class='tableauPlaceholder' 
+                    id='viz1634825117834' 
+                    style='position: relative'>
+                    <noscript>
+                        <a href=' '>
+                            <img alt='Entertainment ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Me&#47;Melbourneentertainment&#47;Entertainment&#47;1_rss.png' style='border: none' />
+                        </a >
+                    </noscript>
+                    <object class='tableauViz'  style='display:none;'>
+                        <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
+                        <param name='embed_code_version' value='3' /> 
+                        <param name='site_root' value='' />
+                        <param name='name' value='Melbourneentertainment&#47;Entertainment' />
+                        <param name='tabs' value='no' />
+                        <param name='toolbar' value='yes' />
+                        <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Me&#47;Melbourneentertainment&#47;Entertainment&#47;1.png' /> 
+                        <param name='animate_transition' value='yes' />
+                        <param name='display_static_image' value='yes' />
+                        <param name='display_spinner' value='yes' />
+                        <param name='display_overlay' value='yes' />
+                        <param name='display_count' value='yes' />
+                        <param name='language' value='en-US' />
+                        <param name='filter' value='publish=yes' />
+                    </object>
+                </div>                
+                <script type='text/javascript'>                    
+                var divElement = document.getElementById('viz1634825117834');                    
+                var vizElement = divElement.getElementsByTagName('object')[0];                    
+                if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height='700px';} 
+                else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height='700px';} 
+                else { vizElement.style.width='100%';vizElement.style.height='700px';}                     
+                var scriptElement = document.createElement('script');                    
+                scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
+                vizElement.parentNode.insertBefore(scriptElement, vizElement);                
+                </script>
+                <div class="text-left">
+                    <br>
+                    <p>The map shows Melbourne's landmarks, tram routes and stations. The menu bar is displayed at the top right of the map. You can choose one type of landmark according to your preference. When you click or hover landmark or tram stops with the mouse, the detailed information of the location will be displayed on the map. In addition, if you click the corresponding icon with the mouse, the right part of the map will switch to the street view near the location</p>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="parallax-section">
+    <div class="container-fluid">
+         <div class="row">
+             <div class="col-4">
+                <!-- SECTION TITLE -->
+                <div class="section-title">
+                    <h1 style="color: #fff;">Visitor Density</h1>
+                </div>
+            </div>
+            <div class="container-fluid" id="tableau2">
+                <div class="col-12 col-sm-6 col-md-8">
+                    <div class='tableauPlaceholder' id='viz1634659210366' style='position: relative'>
+                        <noscript>
+                            <a href=' '>
+                                <img alt='仪表板 2' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Pe&#47;PedestriansVolumeCityMelbourne-v2&#47;2&#47;1_rss.png' style='border: none' />
+                            </a>
+                        </noscript>
+                        <object class='tableauViz'  style='display:none;'>
+                            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                            <param name='embed_code_version' value='3' />
+                            <param name='site_root' value='' />
+                            <param name='name' value='PedestriansVolumeCityMelbourne-v2&#47;2' />
+                            <param name='tabs' value='no' />
+                            <param name='toolbar' value='yes' />
+                            <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Pe&#47;PedestriansVolumeCityMelbourne-v2&#47;2&#47;1.png' /> 
+                            <param name='animate_transition' value='yes' />
+                            <param name='display_static_image' value='yes' />
+                            <param name='display_spinner' value='yes' />
+                            <param name='display_overlay' value='yes' />
+                            <param name='display_count' value='yes' />
+                            <param name='language' value='en-US' />
+                        </object>
+                    </div>                
+                    <script type='text/javascript'>                    
+                    var divElement = document.getElementById('viz1634659210366');                    
+                    var vizElement = divElement.getElementsByTagName('object')[0];                    
+                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} 
+                    else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} 
+                    else { vizElement.style.width='100%';vizElement.style.height='1377px';}                     
+                    var scriptElement = document.createElement('script');                    
+                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
+                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                
+                    </script>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div id="population-density">
+                        <div id="pop-density-text">
+                            <h2 class="text-center"><b>Melbourne Pedestrian Volume Heat Map</b></h2>
+                            <p class="text-left">
+                                Melbourne is a busy city with every year more than 400,000 walking trips made. The trends has shown that it might increse to 1,000,000 people by 2030.
+                                
+                                The map shows you the popular landmarkers of Melbourne, as well as its pedestrian volume. You may avoid crowd cases to relief your Covid-19 concerns or visit most popular city attractions based on those views. You may also click each plot to only see its charts. These map and charts shall help you make travel route decision.
+                            </p>
+                            <h2 class="text-center"><b>Hourly and Weekly Impacts</b></h2>
+                            <p class="text-left">
+                                Melbourne lunch time and rush hours are shown. Also, you may see that under impacts of Covid-19, the volume of pedestrians has been cut in half. The distribution of volume in working weekdays and weekends is also comparable in this charts.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            <br>
+            <br>
+            <br> 
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+         <div class="row">
+
+              <div class="col-6 col-md-4">
+                   <h4>
+                       <b>Creators</b>
+                       <br>Chan Xu
+                       <br>Yiming Qi
+                       <br>Tianliang Zhang
+                       <br>Hai Yang
+                   </h4>    
+              </div>
+
+              <div class="col-6 col-md-4">
+                <h4>
+                    <b>Contacts</b>
+                    <br>chanx2@student.unimelb.edu.au
+                    <br>weichengq@student.unimelb.edu.au
+                    <br>tianliangz@student.unimelb.edu.au
+                    <br>haiy@student.unimelb.edu.au
+                </h4>    
+              </div>
+
+              <div class="col-6 col-md-4">         
+                <h4>
+                    <b>About</b>
+                    <br>This data visualization web page is created for GEOM90007 subject of the University of Melbourne. If you have any inquiries related to the content, please feel free to contact us through Emails. 
+                </h4>
+              </div>
+              <div class="clearfix"></div>
+              <div class="col-md-12 col-sm-12">
+                   <div class="copyright-text">
+                        <h4>Copyright © 2021 Chan Xu, Yiming Qi, Tianliang Zhang, and Hai Yang
+                        
+                            | Web Design Inspiration: <a rel="nofollow" href="https://www.tooplate.com">Tooplate</a>
+                        </h4>
+                   </div>
+              </div>
+              
+         </div>
+    </div>
+</footer>
 
 
-let chart2 = new Chart('chart2', {
-  type: 'bar',
-  data: {
-    datasets: [{
-      data: table4,
-      parsing: {
-        xAxisKey: 'SepalWidthAvg',
-        yAxisKey: 'Species'
-      },
-      categoryPercentage: 0.8,
-      barPercentage: 0.85,
-      backgroundColor: '#DE3163',
-      label: 'Average sepal width'
-    }, {
-      data: table4,
-      parsing: {
-        xAxisKey: 'SepalLengthAvg',
-        yAxisKey: 'Species'
-      },
-      categoryPercentage: 0.8,
-      barPercentage: 0.85,
-      backgroundColor: '#FF7F50',
-      label: 'Average sepal length'
-    }, {
-      data: table4,
-      parsing: {
-        xAxisKey: 'PetalWidthAvg',
-        yAxisKey: 'Species'
-      },
-      categoryPercentage: 0.8,
-      barPercentage: 0.85,
-      backgroundColor: '#FFBF00',
-      label: 'Average petal width'
-    }, {
-      data: table4,
-      parsing: {
-        xAxisKey: 'PetalLengthAvg',
-        yAxisKey: 'Species'
-      },
-      categoryPercentage: 0.8,
-      barPercentage: 0.85,
-      backgroundColor: '#DFFF00',
-      label: 'Average petal length'
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    scales: {
-      x: {
-        grid: {},
-        ticks: {},
-        title: {
-          display: true,
-          text: 'Average Length (cm)'
-        }
-      },
-      y: {
-        grid: {
-          display: false
-        },
-        ticks: {},
-        title: {}
-      }
-    },
-    animation: false,
-    plugins: {
-      legend: {},
-      title: {
-        display: true,
-        text: 'Comparision of petal and sepal size in width and length'
-      },
-      tooltip: {
-        xAlign: 'left',
-        yAlign: 'center',
-        displayColors: false,
-        titleAlign: 'center',
-        bodyAlign: 'center'
-      }
-    }
-  }
-
-});
-
-</script>
-
+<!-- SCRIPTS -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.parallax.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/magnific-popup-options.js"></script>
+<script src="js/modernizr.custom.js"></script>
+<script src="js/smoothscroll.js"></script>
+<script src="js/custom.js"></script>
 </body>
-</html>
